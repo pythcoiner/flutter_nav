@@ -1,0 +1,27 @@
+~/dart/navigation/..
+  .git
+  ★ android
+  ★ integration_test
+  ★ ios
+  ★ lib
+    ★ screens
+    ★ src
+     ★ bloc.dart
+     ★ main.dart
+     ★ old_main.dart
+     ★ Structure.md
+  ★ linux
+  ★ macos
+  ★ rust
+  ★ rust_builder
+  test
+  ★ test_driver
+  ★ web
+  ★ windows
+   ★ .gitignore
+   ★ .metadata
+   ★ analysis_options.yaml
+   ★ flutter_rust_bridge.yaml
+   ★ pubspec.lock
+   ★ pubspec.yaml
+  󰂺 ★ README.md
