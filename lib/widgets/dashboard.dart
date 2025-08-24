@@ -36,10 +36,10 @@ class Dashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Icon homeIcon = Icon(CupertinoIcons.home);
-    Icon receiveIcon = Icon(CupertinoIcons.square_arrow_down);
-    Icon sendIcon = Icon(CupertinoIcons.square_arrow_up);
-    Icon settingsIcon = Icon(CupertinoIcons.settings);
+    Icon homeIcon = Icon(Icons.home);
+    Icon receiveIcon = Icon(Icons.file_download);
+    Icon sendIcon = Icon(Icons.file_upload);
+    Icon settingsIcon = Icon(Icons.settings);
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: Center(child: body),

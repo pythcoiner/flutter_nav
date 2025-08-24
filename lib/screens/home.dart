@@ -30,6 +30,11 @@ class HomeScreen extends StatelessWidget {
             onPressed: () => AppController.error(AppError("Test error")),
             child: Text("Trigger an error"),
           ),
+          ElevatedButton(
+            onPressed: () =>
+                AppController.notif(UserNotif("This is a test notification")),
+            child: Text("Trigger a notification"),
+          ),
         ],
       ),
     );
