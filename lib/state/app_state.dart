@@ -1,8 +1,17 @@
-import 'package:stream_sink/bloc.dart';
-import 'package:stream_sink/src/rust/api/interface.dart';
+import 'package:flutter/material.dart';
+import 'package:stream_sink/widgets/modal.dart';
 
+import '../bloc.dart';
+import '../src/rust/api/interface.dart';
+import '../widgets/dashboard.dart';
+import 'currency.dart';
 import 'wallet.dart';
 import 'screens.dart';
+
+class AppError {
+  late final String msg;
+  AppError(this.msg);
+}
 
 class AppState {
   // Singleton
@@ -13,11 +22,14 @@ class AppState {
   // Private state
   bool _isListeningController = false;
   final AppBloc _bloc = AppBloc();
-  bool _blocShared = false;
 
   // Public state
   final ScreenStates screens = ScreenStates();
   final WalletState wallet = WalletState();
+  MenuButton menuSelected = MenuButton.home;
+  CurrencyState currency = CurrencyState();
+  List<AppError> errors = [];
+  Widget? modal;
 
   // Static methods
 
@@ -31,17 +43,28 @@ class AppState {
     }
   }
 
-  // We share the bloc only once for BlocProvider registration
   static AppBloc? get bloc {
-    if (_instance._blocShared) {
-      return null;
-    } else {
-      _instance._blocShared = true;
-      return _instance._bloc;
-    }
+    return _instance._bloc;
   }
 
   static void dispose() {
     _instance._bloc.close();
+  }
+
+  static onError(AppError error) {
+    if (AppState.I.modal != null) {
+      AppState.I.errors.add(error);
+    } else {
+      AppState.I.modal = errorModal(error);
+    }
+  }
+
+  static onErrorClear() {
+    if (AppState.I.errors.isNotEmpty) {
+      AppError newError = AppState.I.errors[0];
+      AppState.I.modal = errorModal(newError);
+    } else {
+      AppState.I.modal = null;
+    }
   }
 }

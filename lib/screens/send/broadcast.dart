@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../state/app_state.dart';
 import '../../../bloc.dart';
+import '../../widgets/dashboard.dart';
 
 class BroadcastScreenState {
   static const String path = '/send/broadcast';
@@ -23,24 +24,26 @@ class BroadcastScreen extends StatelessWidget {
       builder: (context, state) {
         // final screenState = BroadcastScreenState.state(bloc);
         return Scaffold(
-          appBar: AppBar(title: Center(child: const Text('Broadcast'))),
-          body: Center(
-            child: Column(
-              children: [
-                Text("Broadcast"),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () => bloc.navigateTo("/send/sign"),
-                  child: Text("Previous"),
-                ),
-                SizedBox(height: 10),
-                ElevatedButton(onPressed: () => {}, child: Text("Broadcast")),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () => bloc.navigateTo("/home"),
-                  child: Text("Home"),
-                ),
-              ],
+          body: Dashboard(
+            title: "Send > Broadcast",
+            body: Center(
+              child: Column(
+                children: [
+                  Text("Broadcast"),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () => bloc.navigateTo("/send/sign"),
+                    child: Text("Back"),
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton(onPressed: () => {}, child: Text("Broadcast")),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () => bloc.navigateTo("/home"),
+                    child: Text("Home"),
+                  ),
+                ],
+              ),
             ),
           ),
         );

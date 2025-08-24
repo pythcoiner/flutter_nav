@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stream_sink/state/app_state.dart';
+import 'package:stream_sink/events/app.dart';
 import '../../bloc.dart';
+import '../state/app_state.dart';
+import '../widgets/dashboard.dart';
 
 class HomeScreenState {
   int index = 0;
@@ -11,23 +13,7 @@ class HomeScreenState {
   static const String path = '/home';
 
   static HomeScreenState state(AppBloc bloc) {
-    return AppState.I.screens.home ?? HomeScreenState();
-  }
-
-  void up() {
-    if (index >= offset) {
-      index -= offset;
-    } else {
-      index = 0;
-    }
-  }
-
-  void down() {
-    if (index < (max - offset)) {
-      index += offset;
-    } else {
-      index = (max - offset);
-    }
+    return AppState.I.screens.home;
   }
 }
 
@@ -43,33 +29,18 @@ class HomeScreen extends StatelessWidget {
       bloc: bloc,
       builder: (context, state) {
         final screenState = HomeScreenState.state(bloc);
-        return Scaffold(
-          appBar: AppBar(title: Center(child: const Text('Home'))),
+        return Dashboard(
+          title: "Home",
           body: Column(
             children: [
               Text(
                 'Start: ${screenState.index}, End: ${screenState.index + screenState.offset}',
               ),
               Text('Balance: $balance'),
-              Text('Current Path: ${state.route}'),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(onPressed: () => {}, child: const Text('Up')),
-                  ElevatedButton(onPressed: () {}, child: const Text('Down')),
-                ],
-              ),
+              Text('Current Path: ${state.getRoute()}'),
               ElevatedButton(
-                onPressed: () => bloc.navigateTo("/send"),
-                child: const Text('Send'),
-              ),
-              ElevatedButton(
-                onPressed: () => bloc.navigateTo("/receive"),
-                child: const Text('Receive'),
-              ),
-              ElevatedButton(
-                onPressed: () => bloc.navigateTo("/settings"),
-                child: const Text('Settings'),
+                onPressed: () => bloc.add(ErrorEvent(AppError("Test error!"))),
+                child: Text("Trigger an error"),
               ),
             ],
           ),

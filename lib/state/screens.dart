@@ -9,10 +9,10 @@ import '../screens/receive/history.dart';
 import '../screens/settings.dart';
 
 class ScreenStates {
-  HomeScreenState? home;
+  HomeScreenState home = HomeScreenState();
   SendStates send = SendStates();
   ReceiveStates receive = ReceiveStates();
-  SettingsScreenState? settings = SettingsScreenState();
+  SettingsScreenState settings = SettingsScreenState();
 }
 
 class SendStates {

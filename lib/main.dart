@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:stream_sink/routes.dart';
+import 'package:stream_sink/widgets/modal.dart';
 
 import 'src/rust/api/interface.dart';
 import 'src/rust/frb_generated.dart';
@@ -29,7 +30,14 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(primarySwatch: Colors.blue),
         home: BlocBuilder<AppBloc, AppBlocState>(
           builder: (context, state) {
-            return router(context.read<AppBloc>());
+            {
+              final Widget screen = router(context.read<AppBloc>());
+              if (AppState.I.modal == null) {
+                return screen;
+              } else {
+                return Stack(children: [shadowed(screen), AppState.I.modal!]);
+              }
+            }
           },
         ),
       ),

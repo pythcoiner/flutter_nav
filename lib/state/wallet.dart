@@ -7,7 +7,10 @@ class AccountState {
   int unconfirmedBalance = 0;
   Map<String /* outpoint */, Coin> coins = {};
   Map<String /* txid */, Transaction> transactions = {};
-  String? descriptor;
+  late String descriptor;
+  late Network network;
+  late String name;
+  late AccountType accountType;
 }
 
 class Coin {
@@ -17,3 +20,9 @@ class Coin {
 class Transaction {
   /* Use rust class instead */
 }
+
+class Network {
+  /* Use rust class instead */
+}
+
+enum AccountType { none }

@@ -11,7 +11,7 @@ import 'screens/settings.dart';
 import 'bloc.dart';
 
 Widget router(AppBloc bloc) {
-  final path = bloc.state.route;
+  final path = bloc.state.getRoute();
   print("router: $path");
   switch (path) {
     case '/send':

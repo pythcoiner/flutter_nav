@@ -1,11 +1,23 @@
+import '../widgets/dashboard.dart';
+import '../state/app_state.dart';
+
 abstract class AppEvent {}
 
-class Update extends AppEvent {
-  final int balance;
-  Update(this.balance);
+class UpdateEvent extends AppEvent {}
+
+class NavigateToEvent extends AppEvent {
+  final String path;
+  NavigateToEvent(this.path);
 }
 
-class NavigateTo extends AppEvent {
-  final String path;
-  NavigateTo(this.path);
+class MenuButtonClickedEvent extends AppEvent {
+  final MenuButton button;
+  MenuButtonClickedEvent(this.button);
 }
+
+class ErrorEvent extends AppEvent {
+  final AppError error;
+  ErrorEvent(this.error);
+}
+
+class ClearErrorEvent extends AppEvent {}
