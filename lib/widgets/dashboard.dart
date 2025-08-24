@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stream_sink/bloc.dart';
-import 'package:stream_sink/state/app_state.dart';
+
+import '../controller.dart';
 
 enum MenuButton {
   home,
@@ -46,11 +45,9 @@ class Dashboard extends StatelessWidget {
       body: Center(child: body),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (int index) {
-          context.read<AppBloc>().menuButtonClicked(
-            MenuButton.fromIndex(index),
-          );
+          AppController.menuButtonClicked(MenuButton.fromIndex(index));
         },
-        currentIndex: AppState.I.menuSelected.toIndex(),
+        currentIndex: AppController.I.menuSelected.toIndex(),
         type: BottomNavigationBarType.shifting,
         selectedIconTheme: IconThemeData(color: Colors.orange),
         unselectedIconTheme: IconThemeData(color: Colors.blueAccent),

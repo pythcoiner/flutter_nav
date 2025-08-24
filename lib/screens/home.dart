@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stream_sink/events/app.dart';
-import '../../bloc.dart';
-import '../state/app_state.dart';
+import '../controller.dart';
 import '../widgets/dashboard.dart';
 
 class HomeScreenState {
@@ -12,40 +9,29 @@ class HomeScreenState {
 
   static const String path = '/home';
 
-  static HomeScreenState state(AppBloc bloc) {
-    return AppState.I.screens.home;
+  static HomeScreenState state() {
+    return AppController.I.screens.home;
   }
 }
 
 class HomeScreen extends StatelessWidget {
-  final AppBloc bloc;
-
-  const HomeScreen({super.key, required this.bloc});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final balance = AppState.I.wallet.accounts[0].confirmedBalance;
-    return BlocBuilder<AppBloc, AppBlocState>(
-      bloc: bloc,
-      builder: (context, state) {
-        final screenState = HomeScreenState.state(bloc);
-        return Dashboard(
-          title: "Home",
-          body: Column(
-            children: [
-              Text(
-                'Start: ${screenState.index}, End: ${screenState.index + screenState.offset}',
-              ),
-              Text('Balance: $balance'),
-              Text('Current Path: ${state.getRoute()}'),
-              ElevatedButton(
-                onPressed: () => bloc.add(ErrorEvent(AppError("Test error!"))),
-                child: Text("Trigger an error"),
-              ),
-            ],
+    final balance = AppController.I.wallet.accounts[0].confirmedBalance;
+    return Dashboard(
+      title: "Home",
+      body: Column(
+        children: [
+          Text('Balance: $balance'),
+          Text('Current Path: ${AppController.I.path}'),
+          ElevatedButton(
+            onPressed: () => AppController.error(AppError("Test error")),
+            child: Text("Trigger an error"),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }

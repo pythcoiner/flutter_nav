@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../bloc.dart';
+import '../controller.dart';
 
-class Value<T> {
-  late T value;
-  Value(this.value);
-}
-
-TextFormField form(String label, TextEditingController ctrl) {
-  return TextFormField(
-    decoration: InputDecoration(label: Text(label)),
-    controller: ctrl,
-  );
-}
-
-DropdownButton comboBox<T>(List<T> elements, Value<T> value, AppBloc bloc) {
+DropdownButton comboBox<T>(List<T> elements, Value<T> value) {
   return DropdownButton(
     value: value.value,
     items: [
@@ -24,7 +12,19 @@ DropdownButton comboBox<T>(List<T> elements, Value<T> value, AppBloc bloc) {
     ],
     onChanged: (v) {
       value.value = v;
-      bloc.update();
+      AppController.updateUI();
     },
   );
+}
+
+TextFormField form(String label, TextEditingController ctrl) {
+  return TextFormField(
+    decoration: InputDecoration(label: Text(label)),
+    controller: ctrl,
+  );
+}
+
+class Value<T> {
+  late T value;
+  Value(this.value);
 }

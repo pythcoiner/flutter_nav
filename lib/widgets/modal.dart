@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../bloc.dart';
-import '../events/app.dart';
-import '../state/app_state.dart';
+import '../controller.dart';
 
 Widget errorModal(AppError error) {
-  AppBloc bloc = AppState.bloc!;
   return AlertDialog(
     content: Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -17,7 +14,7 @@ Widget errorModal(AppError error) {
     actions: [
       ElevatedButton(
         onPressed: () {
-          bloc.add(ClearErrorEvent());
+          AppController.clearError();
         },
         child: Text("Close"),
       ),

@@ -1,46 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:stream_sink/routes.dart';
-import 'package:stream_sink/widgets/modal.dart';
 
+import 'controller.dart';
+import 'routes.dart';
 import 'src/rust/api/interface.dart';
 import 'src/rust/frb_generated.dart';
 
-import 'bloc.dart';
-import 'state/app_state.dart';
+import 'widgets/modal.dart';
 
 Future<void> main() async {
   await RustLib.init();
   RController.init();
-  AppState.listenController();
+  AppController.listenController();
 
-  runApp(MyApp(bloc: AppState.bloc!));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({required this.bloc, super.key});
-  final AppBloc bloc;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => bloc,
-      child: MaterialApp(
-        title: 'Navigation',
-        theme: ThemeData(primarySwatch: Colors.blue),
-        home: BlocBuilder<AppBloc, AppBlocState>(
-          builder: (context, state) {
-            {
-              final Widget screen = router(context.read<AppBloc>());
-              if (AppState.I.modal == null) {
-                return screen;
-              } else {
-                return Stack(children: [shadowed(screen), AppState.I.modal!]);
-              }
-            }
-          },
-        ),
-      ),
+    var sb = StreamBuilder(
+      stream: AppController.I.uiStream(),
+      builder: (_, _) {
+        final Widget screen = router();
+        if (AppController.I.modal == null) {
+          return screen;
+        } else {
+          return Stack(children: [shadowed(screen), AppController.I.modal!]);
+        }
+      },
     );
+    return MaterialApp(home: sb);
   }
 }

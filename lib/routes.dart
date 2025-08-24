@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'controller.dart';
 import 'screens/home.dart';
 import 'screens/send/send.dart';
 import 'screens/send/broadcast.dart';
@@ -8,32 +9,31 @@ import 'screens/receive/receive.dart';
 import 'screens/receive/history.dart';
 import 'screens/receive/list.dart';
 import 'screens/settings.dart';
-import 'bloc.dart';
 
-Widget router(AppBloc bloc) {
-  final path = bloc.state.getRoute();
+Widget router() {
+  final path = AppController.I.path;
   print("router: $path");
   switch (path) {
     case '/send':
     case '/send/send':
-      return SendScreen(bloc: bloc);
+      return SendScreen();
     case '/send/broadcast':
-      return BroadcastScreen(bloc: bloc);
+      return BroadcastScreen();
     case '/send/verif':
-      return VerifScreen(bloc: bloc);
+      return VerifScreen();
     case '/send/sign':
-      return SignScreen(bloc: bloc);
+      return SignScreen();
     case '/receive':
     case '/receive/receive':
-      return ReceiveScreen(bloc: bloc);
+      return ReceiveScreen();
     case '/receive/history':
-      return ReceiveHistoryScreen(bloc: bloc);
+      return ReceiveHistoryScreen();
     case '/receive/list':
-      return AddressesListScreen(bloc: bloc);
+      return AddressesListScreen();
     case '/settings':
-      return SettingsScreen(bloc: bloc);
+      return SettingsScreen();
     case '/home':
     default:
-      return HomeScreen(bloc: bloc);
+      return HomeScreen();
   }
 }

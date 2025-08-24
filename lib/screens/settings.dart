@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../bloc.dart';
-import '../state/app_state.dart';
+import '../controller.dart';
 import '../state/currency.dart';
 import '../widgets/dashboard.dart';
 import '../widgets/form.dart';
@@ -28,24 +26,21 @@ class SettingsScreenState {
 
   // displayed currency
   final _currency = Value(Currency.btc);
-  DropdownButton currency(AppBloc bloc) =>
-      comboBox(currencies(), _currency, bloc);
+  DropdownButton currency() => comboBox(currencies(), _currency);
 
   SettingsScreenState() {
     _electrumUrl.text = "abcd";
   }
 
   static SettingsScreenState state() {
-    return AppState.I.screens.settings;
+    return AppController.I.screens.settings;
   }
 }
 
 class SettingsScreen extends StatelessWidget {
-  final AppBloc bloc;
+  const SettingsScreen({super.key});
 
-  const SettingsScreen({super.key, required this.bloc});
-
-  static Widget body(AppBloc bloc) {
+  static Widget body() {
     SettingsScreenState screenState = SettingsScreenState.state();
     return Padding(
       padding: const EdgeInsets.only(left: 25.0, right: 25.0),
@@ -54,7 +49,7 @@ class SettingsScreen extends StatelessWidget {
           Text("Settings"),
           SizedBox(height: 10),
           ElevatedButton(
-            onPressed: () => bloc.navigateTo("/home"),
+            onPressed: () => AppController.navigateTo("/home"),
             child: Text("Home"),
           ),
           SizedBox(height: 20),
@@ -69,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
           ),
           Row(
             spacing: 10.0,
-            children: [Text("Displayed currency"), screenState.currency(bloc)],
+            children: [Text("Displayed currency"), screenState.currency()],
           ),
         ],
       ),
@@ -78,13 +73,8 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AppBloc, AppBlocState>(
-      bloc: bloc,
-      builder: (context, state) {
-        return Scaffold(
-          body: Dashboard(title: "Settings", body: body(bloc)),
-        );
-      },
+    return Scaffold(
+      body: Dashboard(title: "Settings", body: body()),
     );
   }
 }
