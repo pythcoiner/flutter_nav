@@ -73,7 +73,7 @@ class AppController {
     }
   }
 
-  static void error(AppError error) {
+  static void setError(AppError error) {
     if (AppController.I.modal != null) {
       AppController.I.errors.add(error);
     } else {
@@ -93,7 +93,7 @@ class AppController {
     updateUI();
   }
 
-  static void notif(UserNotif notif) {
+  static void setNotif(UserNotif notif) {
     if (AppController.I.banner == null) {
       AppController.I.banner = notifBanner(notif);
       AppController.updateUI();
@@ -110,6 +110,32 @@ class AppController {
     } else {
       AppController.I.banner = null;
     }
+    updateUI();
+  }
+
+  static void setBottomModal(UserNotif notif) {
+    Widget modal = Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(notif.msg),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () {
+              AppController.clearBottomModal();
+            },
+            child: Text("Close"),
+          ),
+        ],
+      ),
+    );
+    AppController.I.bottomModal = modal;
+    AppController.updateUI();
+  }
+
+  static void clearBottomModal() {
+    AppController.I.bottomModal = null;
     updateUI();
   }
 

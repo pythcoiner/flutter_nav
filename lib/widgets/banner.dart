@@ -8,5 +8,9 @@ Widget notifBanner(UserNotif notif) {
     },
     child: Icon(Icons.close),
   );
-  return MaterialBanner(content: Text(notif.msg), actions: [close]);
+  return MaterialBanner(
+    leading: notif.getIcon(),
+    content: Text(notif.msg),
+    actions: [close],
+  );
 }

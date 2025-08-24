@@ -39,9 +39,7 @@ class MyApp extends StatelessWidget {
             stack.add(SafeArea(child: AppController.I.banner!));
           }
         }
-        if (AppController.I.bottomModal != null) {
-          stack.add(AppController.I.bottomModal!);
-        }
+        // NOTE: bottom modal is managed in Dashboard
         if (AppController.I.modal != null) {
           stack.add(AppController.I.modal!);
         }

@@ -27,13 +27,22 @@ class HomeScreen extends StatelessWidget {
           Text('Balance: $balance'),
           Text('Current Path: ${AppController.I.path}'),
           ElevatedButton(
-            onPressed: () => AppController.error(AppError("Test error")),
+            onPressed: () => AppController.setError(AppError("Test error")),
             child: Text("Trigger an error"),
           ),
+          SizedBox(height: 10),
           ElevatedButton(
-            onPressed: () =>
-                AppController.notif(UserNotif("This is a test notification")),
+            onPressed: () => AppController.setNotif(
+              UserNotif("This is a test notification"),
+            ),
             child: Text("Trigger a notification"),
+          ),
+          SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () => AppController.setBottomModal(
+              UserNotif("This is an example of bottom modal"),
+            ),
+            child: Text("Open bottom modal"),
           ),
         ],
       ),

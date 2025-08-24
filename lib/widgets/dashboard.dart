@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../controller.dart';
@@ -41,6 +40,7 @@ class Dashboard extends StatelessWidget {
     Icon sendIcon = Icon(Icons.file_upload);
     Icon settingsIcon = Icon(Icons.settings);
     return Scaffold(
+      bottomSheet: AppController.I.bottomModal,
       appBar: AppBar(title: Text(title)),
       body: Center(child: body),
       bottomNavigationBar: BottomNavigationBar(
