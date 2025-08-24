@@ -24,14 +24,20 @@ class MyApp extends StatelessWidget {
       stream: AppController.I.uiStream(),
       builder: (_, _) {
         late Widget screen;
-        if (AppController.I.modal != null || AppController.I.modal != null) {
+        bool shadow =
+            (AppController.I.modal != null || AppController.I.modal != null);
+        if (shadow) {
           screen = shadowed(router());
         } else {
           screen = router();
         }
         List<Widget> stack = [screen];
         if (AppController.I.banner != null) {
-          stack.add(SafeArea(child: AppController.I.banner!));
+          if (shadow) {
+            stack.add(shadowed(SafeArea(child: AppController.I.banner!)));
+          } else {
+            stack.add(SafeArea(child: AppController.I.banner!));
+          }
         }
         if (AppController.I.bottomModal != null) {
           stack.add(AppController.I.bottomModal!);
